@@ -138,15 +138,15 @@ export function AnimatedNav() {
         {/* Logo / Brand icon */}
         <motion.div
           variants={logoVariants}
-          className="flex-shrink-0 flex items-center font-semibold pl-4 pr-2 text-accent"
+          className="flex flex-shrink-0 items-center font-semibold pl-3 sm:pl-4 pr-1 sm:pr-2 text-accent"
         >
-          <Navigation className="h-5 w-5" />
+          <Navigation className="h-4 w-4 sm:h-5 sm:w-5" />
         </motion.div>
 
         {/* Nav links */}
         <motion.div
           className={cn(
-            "flex items-center gap-1 sm:gap-4 pr-4",
+            "flex items-center gap-1 sm:gap-4 pr-2 sm:pr-4",
             !isExpanded && "pointer-events-none"
           )}
         >
@@ -159,7 +159,7 @@ export function AnimatedNav() {
                 spy={true}
                 activeClass="!text-accent"
                 onClick={(e) => e.stopPropagation()}
-                className="text-sm font-medium text-slate-400 hover:text-white transition-colors px-2 py-1 cursor-pointer whitespace-nowrap"
+                className="text-xs sm:text-sm font-medium text-slate-400 hover:text-white transition-colors px-1.5 sm:px-2 py-1 cursor-pointer whitespace-nowrap"
               >
                 {item.name}
               </Link>

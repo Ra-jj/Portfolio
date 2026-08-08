@@ -30,7 +30,7 @@ const Hero = () => {
         </Canvas>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 h-full flex flex-col justify-center relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 h-full flex flex-col justify-center relative z-10 pt-24 sm:pt-0">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
