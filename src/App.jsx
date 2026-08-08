@@ -1,4 +1,4 @@
-import KineticNav from "./components/ui/KineticNav";
+import AnimatedNav from "./components/ui/AnimatedNav";
 import Hero from "./components/Hero";
 import Timeline from "./components/Timeline";
 import Skills from "./components/Skills";
@@ -14,7 +14,7 @@ function App() {
       <WebStrings />
       <Cursor />
       <div className="relative z-10">
-        <KineticNav />
+        <AnimatedNav />
 
       <main>
         <Hero />
