@@ -72,7 +72,7 @@ const Hero = () => {
       </div>
 
       {/* Bottom fade overlay for smooth transition to next section */}
-      <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-primary to-transparent z-10" />
+      <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-primary to-transparent z-[5] pointer-events-none" />
     </section>
   );
 };
