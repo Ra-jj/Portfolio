@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { FlowButton } from "./ui/FlowButton";
 
 const Contact = () => {
-  const [status, setStatus] = useState(""); // 'idle', 'submitting', 'success', 'error'
+  const [status, setStatus] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -12,7 +12,6 @@ const Contact = () => {
     const form = e.target;
     const data = new FormData(form);
 
-    // Replace with your formspree endpoint in .env
     const endpoint =
       import.meta.env.VITE_FORMSPREE_ENDPOINT ||
       "https://formspree.io/f/placeholder";
@@ -21,9 +20,7 @@ const Contact = () => {
       const response = await fetch(endpoint, {
         method: "POST",
         body: data,
-        headers: {
-          Accept: "application/json",
-        },
+        headers: { Accept: "application/json" },
       });
 
       if (response.ok) {
@@ -41,9 +38,11 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="py-12 md:py-24 bg-secondary/20 relative w-full border-t border-slate-800"
+      className="py-20 md:py-32 bg-secondary/30 relative w-full border-t border-white/5"
     >
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 md:px-12">
+      <div className="absolute inset-0 pointer-events-none bg-grid-fade opacity-50" />
+
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 md:px-12 relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -51,8 +50,11 @@ const Contact = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Let's Connect</h2>
-          <p className="text-slate-400 text-lg">
+          <span className="inline-block chip mb-4">contact</span>
+          <h2 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">
+            Let's <span className="text-gradient-static">connect</span>
+          </h2>
+          <p className="text-slate-400 text-lg max-w-xl mx-auto">
             I'm currently looking for new opportunities. Whether you have a
             question or just want to say hi, I'll try my best to get back to
             you!
@@ -63,80 +65,87 @@ const Contact = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
           onSubmit={handleSubmit}
-          className="space-y-5 sm:space-y-6 bg-primary/50 backdrop-blur-md p-5 sm:p-8 rounded-2xl border border-slate-800 shadow-xl"
+          className="relative surface rounded-2xl p-5 sm:p-8 shadow-card overflow-hidden"
         >
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-slate-300 mb-2"
-            >
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              required
-              className="w-full px-4 py-3 bg-secondary border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-white transition-all"
-              placeholder="Your name"
+          {/* corner glow */}
+          <span className="absolute -top-20 -left-20 h-60 w-60 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
+          <span className="absolute -bottom-20 -right-20 h-60 w-60 rounded-full bg-glow/10 blur-3xl pointer-events-none" />
+
+          <div className="relative space-y-5 sm:space-y-6">
+            <div>
+              <label
+                htmlFor="name"
+                className="block text-[11px] font-mono uppercase tracking-[0.2em] text-accent/80 mb-2"
+              >
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                className="w-full px-4 py-3 bg-secondary-2 border border-white/10 rounded-lg focus-accent text-white placeholder:text-slate-500 transition-all"
+                placeholder="Your name"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-[11px] font-mono uppercase tracking-[0.2em] text-accent/80 mb-2"
+              >
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                className="w-full px-4 py-3 bg-secondary-2 border border-white/10 rounded-lg focus-accent text-white placeholder:text-slate-500 transition-all"
+                placeholder="leo@example.com"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="message"
+                className="block text-[11px] font-mono uppercase tracking-[0.2em] text-accent/80 mb-2"
+              >
+                Message
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                required
+                rows={5}
+                className="w-full px-4 py-3 bg-secondary-2 border border-white/10 rounded-lg focus-accent text-white placeholder:text-slate-500 transition-all resize-none"
+                placeholder="What's on your mind?"
+              ></textarea>
+            </div>
+
+            <FlowButton
+              text={status === "submitting" ? "Sending..." : "Send Message"}
+              as="button"
+              type="submit"
+              disabled={status === "submitting"}
+              className="w-full justify-center py-4 disabled:opacity-70 disabled:cursor-not-allowed"
             />
+
+            {status === "success" && (
+              <p className="text-emerald-400 text-center mt-2 font-medium">
+                ✓ Message sent — I'll get back to you soon.
+              </p>
+            )}
+            {status === "error" && (
+              <p className="text-red-400 text-center mt-2 font-medium">
+                ✕ Something went wrong. Please try again.
+              </p>
+            )}
           </div>
-
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-slate-300 mb-2"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              className="w-full px-4 py-3 bg-secondary border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-white transition-all"
-              placeholder="leo@example.com"
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="message"
-              className="block text-sm font-medium text-slate-300 mb-2"
-            >
-              Message
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              required
-              rows={5}
-              className="w-full px-4 py-3 bg-secondary border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-white transition-all resize-none"
-              placeholder="What's on your mind?"
-            ></textarea>
-          </div>
-
-          <FlowButton
-            text={status === "submitting" ? "Sending..." : "Send Message"}
-            as="button"
-            type="submit"
-            disabled={status === "submitting"}
-            className="w-full justify-center py-4 disabled:opacity-70 disabled:cursor-not-allowed"
-          />
-
-          {status === "success" && (
-            <p className="text-emerald-400 text-center mt-4 font-medium">
-              Message sent successfully! I'll get back to you soon.
-            </p>
-          )}
-          {status === "error" && (
-            <p className="text-red-400 text-center mt-4 font-medium">
-              Oops! There was a problem submitting your form. Please try again.
-            </p>
-          )}
         </motion.form>
+
       </div>
     </section>
   );

@@ -34,7 +34,8 @@ export const journey = [
       },
       {
         name: "AI Resume Analyzer",
-        link: "https://github.com/Ra-jj/AI-Resume-Analyzer.git", // Assuming standard naming convention based on other projects. The user can update if it's different.
+        link: "https://github.com/Ra-jj/AI-Resume-Analyzer.git",
+        liveLink: "https://ai-resume-analyzer-rajcodes.vercel.app/",
       }
     ],
   },
@@ -56,6 +57,7 @@ export const journey = [
       {
         name: "Chatify",
         link: "https://github.com/Ra-jj/chatify.git",
+        liveLink: "https://rajcodes-chatify.onrender.com",
       }
     ],
   },

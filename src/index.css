@@ -1,49 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @layer base {
   html {
     scroll-behavior: smooth;
   }
   body {
     @apply bg-primary text-slate-200 antialiased font-sans;
+    background-color: #05070d;
+    background-image:
+      radial-gradient(1200px 600px at 80% -10%, rgba(56, 189, 248, 0.10), transparent 60%),
+      radial-gradient(900px 500px at 10% 10%, rgba(34, 211, 238, 0.06), transparent 60%);
+  }
+  ::selection {
+    @apply bg-accent/30 text-accent;
   }
 }
 
-/* Custom Scrollbar */
+/* Headings: tighter, bolder, sharper */
+@layer base {
+  h1, h2, h3 {
+    @apply tracking-tight;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/* ---------- Scrollbar ---------- */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
-
 ::-webkit-scrollbar-track {
-  background: #0f172a; 
+  background: #05070d;
 }
- 
 ::-webkit-scrollbar-thumb {
-  background: #334155; 
-  border-radius: 4px;
+  background: linear-gradient(180deg, #1e293b, #0d1320);
+  border-radius: 8px;
+  border: 2px solid #05070d;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569; 
+  background: linear-gradient(180deg, #38bdf8, #0284c7);
 }
 
-/* Prevent horizontal overflow on mobile */
+/* ---------- Prevent horizontal overflow on mobile ---------- */
 html, body {
   overflow-x: hidden;
 }
 
-/* Reduce WebStrings intensity on mobile for performance */
+/* ---------- Mobile perf: reduce WebStrings intensity ---------- */
 @media (max-width: 640px) {
   canvas.fixed {
     opacity: 0.25 !important;
   }
 }
 
-/* Touch-friendly form inputs on mobile */
+/* ---------- Mobile input font (prevents iOS zoom) ---------- */
 @media (max-width: 768px) {
   input, textarea, select, button {
-    font-size: 16px; /* Prevents iOS zoom on focus */
+    font-size: 16px;
+  }
+}
+
+/* ---------- Utilities ---------- */
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(120deg, #7dd3fc 0%, #38bdf8 35%, #22d3ee 70%, #38bdf8 100%);
+    background-size: 200% 200%;
+    animation: gradient-pan 8s ease-in-out infinite;
+  }
+  .text-gradient-static {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(120deg, #7dd3fc 0%, #38bdf8 50%, #22d3ee 100%);
+  }
+  .hairline {
+    background: linear-gradient(90deg, transparent, rgba(148,163,184,0.25), transparent);
+  }
+  .glow-ring {
+    box-shadow:
+      0 0 0 1px rgba(56,189,248,0.35),
+      0 10px 40px -10px rgba(56,189,248,0.45);
+  }
+  .glow-ring:hover {
+    box-shadow:
+      0 0 0 1px rgba(56,189,248,0.55),
+      0 20px 60px -10px rgba(56,189,248,0.65);
+  }
+  .surface {
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)) ,
+                #0d1320;
+    border: 1px solid rgba(148,163,184,0.10);
+  }
+  .surface-2 {
+    background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0)) ,
+                #141b2d;
+    border: 1px solid rgba(148,163,184,0.10);
+  }
+  .noise::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.45'/></svg>");
+    opacity: 0.04;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+  .underline-grow {
+    position: relative;
+  }
+  .underline-grow::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 100%;
+    bottom: -4px;
+    height: 2px;
+    background: linear-gradient(90deg, #38bdf8, #22d3ee);
+    transition: right 0.35s ease;
+  }
+  .underline-grow:hover::after,
+  .underline-grow.active::after {
+    right: 0;
+  }
+  .chip {
+    @apply text-[11px] font-mono uppercase tracking-wider text-accent;
+    background: rgba(56,189,248,0.08);
+    border: 1px solid rgba(56,189,248,0.18);
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+  .focus-accent:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(56,189,248,0.35);
+    border-color: rgba(56,189,248,0.6);
   }
 }
