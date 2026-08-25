@@ -12,11 +12,11 @@ import {
   SiMongodb,
   SiExpress,
   SiMysql,
-  SiSocketdotio,
-  SiVite
+  SiSocketdotio
 } from "react-icons/si";
 import { TbApi } from "react-icons/tb";
 import { FaMicrochip } from "react-icons/fa";
+import { Layers } from "lucide-react";
 
 export const skillGroups = [
   {
@@ -36,7 +36,7 @@ export const skillGroups = [
       { name: "React.js", icon: FaReact, color: "text-sky-400" },
       { name: "Tailwind CSS", icon: SiTailwindcss, color: "text-teal-400" },
       { name: "DaisyUI", icon: SiTailwindcss, color: "text-purple-400" },
-      { name: "Vite", icon: SiVite, color: "text-yellow-300" },
+      { name: "Zustand", icon: Layers, color: "text-orange-400" },
     ]
   },
   {

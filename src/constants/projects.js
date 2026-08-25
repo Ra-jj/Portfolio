@@ -1,6 +1,6 @@
 import chatifyImg from "../assets/Chatify.png";
 import resumeImg from "../assets/AI Resume.png";
-import thumbImg from "../assets/AI Thumbnail.png";
+import donorImg from "../assets/Donor.png";
 
 export const projects = [
   {
@@ -23,11 +23,12 @@ export const projects = [
   },
   {
     id: 3,
-    title: "AI Thumbnail Generator (Thumbfy)",
-    description: "A full-stack AI thumbnail generation platform serving end-to-end image creation workflows. Implemented JWT-based authentication and bcrypt password hashing via RESTful Express.js APIs backed by MongoDB.",
-    tags: ["MERN Stack", "JWT", "bcrypt", "REST APIs"],
-    sourceCode: "https://github.com/Ra-jj/AI-Thumbnail-Generator.git",
-    liveDemo: null,
-    image: thumbImg,
+    title: "Donor",
+    description: "A real-time blood donation coordination platform that matches compatible donors within a 15 km radius of hospital emergencies using MongoDB geospatial indexing. Features instant WebSocket notifications, in-app chat, and JWT-secured authentication.",
+    tags: ["React.js", "Node.js", "Express", "MongoDB", "Socket.io", "TailwindCSS"],
+    sourceCode: "https://github.com/Ra-jj/Donor.git",
+    liveDemo: "https://rajcodes-donor.onrender.com",
+    image: donorImg,
   },
 ];
+

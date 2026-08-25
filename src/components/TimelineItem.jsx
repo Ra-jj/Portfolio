@@ -1,12 +1,7 @@
 import { motion } from "framer-motion";
 import { HiOutlineCode, HiOutlineExternalLink } from "react-icons/hi";
-import clsx from "clsx";
-import { twMerge } from "tailwind-merge";
+import { cn } from "../lib/utils";
 import { BorderBeam } from "border-beam";
-
-function cn(...inputs) {
-  return twMerge(clsx(inputs));
-}
 
 const TimelineItem = ({ data, isLeft }) => {
   return (
@@ -73,7 +68,7 @@ const TimelineItem = ({ data, isLeft }) => {
                     key={idx}
                     className={cn(
                       "group/proj relative p-4 rounded-xl bg-secondary-2/60 border border-white/5 hover:border-accent/40 transition-all overflow-hidden flex flex-col items-center justify-center text-center",
-                      data.projects.length === 1 && isLeft ? "sm:col-start-2" : ""
+                      data.projects.length === 1 ? "sm:col-span-2" : ""
                     )}
                   >
                     <h4 className="text-white font-bold text-base sm:text-lg mb-1.5">
