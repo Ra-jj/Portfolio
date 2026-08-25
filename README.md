@@ -1,49 +1,53 @@
-# Narrative Journey Portfolio
+# Monodip Bhattacharya — Portfolio
 
-A responsive, scroll-driven React developer portfolio designed to tell a story rather than just list projects. Built with Vite, React, Tailwind CSS, and Framer Motion.
+> A scroll-driven, story-first developer portfolio that walks through my journey from electronics engineering to building production-grade full-stack applications.
 
-## Features
-- **Narrative Timeline**: The core feature is a vertical timeline detailing the developer's journey, built entirely from a data structure (`journey.js`).
-- **Subtle 3D Hero**: Uses React Three Fiber for a lightweight, non-distracting starry background.
-- **Formspree Integration**: Serverless contact form handling out of the box.
-- **Scroll Animations**: Smooth entrance animations powered by Framer Motion.
-- **Fully Responsive**: Collapsing timeline and mobile-friendly navigation.
+🔗 **[View Live](https://rajcodes-portfolio.vercel.app)**
 
-## Tech Stack
-- React (Vite)
-- Tailwind CSS
-- Framer Motion
-- React Three Fiber / Drei
-- React Scroll & React Icons
+---
 
-## Setup Instructions
+## What's Inside
 
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+- **Narrative Timeline** — A vertical timeline that tells the story of how I got here, driven by a single data file.
+- **3D Starfield Hero** — A lightweight React Three Fiber canvas with animated stars.
+- **Animated Navigation** — A collapsible pill-style navbar that responds to scroll direction.
+- **Border Beam Effects** — Glowing animated borders on project cards and timeline items.
+- **Custom Cursor & Web Strings** — Interactive visual effects for a premium feel.
+- **Contact Form** — Serverless form handling via Formspree.
+- **Fully Responsive** — Mobile-first design with adaptive layouts across all breakpoints.
 
-2. **Environment Variables:**
-   Create a `.env` file in the root directory and add your Formspree endpoint:
-   ```env
-   VITE_FORMSPREE_ENDPOINT=https://formspree.io/f/your_form_id
-   ```
+## Featured Projects
 
-3. **Start the Development Server:**
-   ```bash
-   npm run dev
-   ```
+| Project | Description | Links |
+|---------|-------------|-------|
+| **Chatify** | Real-time chat app with Socket.io & cursor-based pagination | [Code](https://github.com/Ra-jj/chatify) · [Live](https://rajcodes-chatify.onrender.com) |
+| **AI Resume Analyzer** | AI-powered resume analysis with ATS scoring | [Code](https://github.com/Ra-jj/AI-Resume-Analyzer) · [Live](https://ai-resume-analyzer-rajcodes.vercel.app) |
+| **Donor** | Blood donation coordination with geospatial donor matching | [Code](https://github.com/Ra-jj/Donor) · [Live](https://rajcodes-donor.onrender.com) |
 
-4. **Personalize the Content:**
-   Search for `[FILL IN]` and `[MyName]` across the codebase, specifically in:
-   - `src/components/Hero.jsx`
-   - `src/components/Navbar.jsx`
-   - `src/constants/journey.js`
-   - `src/constants/projects.js`
+## Built With
 
-## Deployment (Vercel / Netlify)
-This Vite project is ready to be deployed instantly:
-1. Push your code to a GitHub repository.
-2. Import the repository in Vercel or Netlify.
-3. Add your `VITE_FORMSPREE_ENDPOINT` to the Environment Variables settings in your deployment dashboard.
-4. Deploy! The build command is `npm run build` and the output directory is `dist`.
+`React 19` · `Vite` · `Tailwind CSS` · `Framer Motion` · `GSAP` · `React Three Fiber` · `Zustand` · `Socket.io` · `border-beam`
+
+## Architecture
+
+```
+src/
+├── components/       # UI sections (Hero, Timeline, Skills, Projects, Contact)
+│   └── ui/           # Reusable primitives (AnimatedNav, Cursor, FlowButton, WebStrings)
+├── constants/        # All portfolio content as data files
+│   ├── journey.js    # Timeline milestones
+│   ├── projects.js   # Featured project cards
+│   └── skills.js     # Skills gained section
+└── lib/              # Shared utilities
+```
+
+> All content is data-driven. Update `src/constants/` to personalize — no component code changes needed.
+
+## Connect
+
+- **GitHub**: [Ra-jj](https://github.com/Ra-jj)
+- **LinkedIn**: [Monodip Bhattacharya](https://linkedin.com/in/)
+
+---
+
+*Designed & built by Monodip Bhattacharya.*
