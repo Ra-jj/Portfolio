@@ -1,9 +1,5 @@
 import { motion } from "framer-motion";
-import {
-  projects,
-  COLD_START_HINT,
-  COLD_START_TITLE,
-} from "../constants/projects";
+import { projects } from "../constants/projects";
 import { HiOutlineExternalLink, HiOutlineCode } from "react-icons/hi";
 import { BorderBeamPanel } from "./ui/BorderBeamPanel";
 
@@ -80,10 +76,7 @@ const Projects = () => {
                     ))}
                   </div>
 
-                  {/* The hint stays on the same row as the links so every card's
-                      footer keeps one height and the rows line up across the grid.
-                      flex-wrap is only a fallback if the row cannot fit. */}
-                  <div className="flex flex-wrap items-center gap-5 gap-y-2 mt-auto pt-4 border-t border-white/5">
+                  <div className="flex items-center gap-5 mt-auto pt-4 border-t border-white/5">
                     <a
                       href={project.sourceCode}
                       target="_blank"
@@ -93,22 +86,14 @@ const Projects = () => {
                       <HiOutlineCode size={18} /> Code
                     </a>
                     {project.liveDemo && (
-                      <span className="inline-flex items-center gap-2">
-                        <a
-                          href={project.liveDemo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          title={project.coldStart ? COLD_START_TITLE : undefined}
-                          className="inline-flex items-center gap-2 text-sm font-medium text-slate-300 hover:text-accent transition-colors"
-                        >
-                          <HiOutlineExternalLink size={18} /> Live
-                        </a>
-                        {project.coldStart && (
-                          <span className="text-[10px] font-mono text-slate-400 whitespace-nowrap">
-                            {COLD_START_HINT}
-                          </span>
-                        )}
-                      </span>
+                      <a
+                        href={project.liveDemo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm font-medium text-slate-300 hover:text-accent transition-colors"
+                      >
+                        <HiOutlineExternalLink size={18} /> Live
+                      </a>
                     )}
                   </div>
                 </div>
