@@ -2,22 +2,35 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { FlowButton } from "./ui/FlowButton";
 
+// Vite inlines VITE_* variables at build time, so this value is fixed for the
+// lifetime of the bundle and only needs reading once.
+const FORMSPREE_ENDPOINT = (import.meta.env.VITE_FORMSPREE_ENDPOINT ?? "").trim();
+const LINKEDIN_URL =
+  "https://www.linkedin.com/in/monodip-bhattacharya-b31768327/";
+
 const Contact = () => {
   const [status, setStatus] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Without an endpoint there is nowhere to send the message. The form is not
+    // reset, so the visitor keeps what they typed and can paste it elsewhere.
+    if (!FORMSPREE_ENDPOINT) {
+      console.warn(
+        "Contact form: VITE_FORMSPREE_ENDPOINT is not set. The message was not sent.",
+      );
+      setStatus("unconfigured");
+      return;
+    }
+
     setStatus("submitting");
 
     const form = e.target;
     const data = new FormData(form);
 
-    const endpoint =
-      import.meta.env.VITE_FORMSPREE_ENDPOINT ||
-      "https://formspree.io/f/placeholder";
-
     try {
-      const response = await fetch(endpoint, {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
         method: "POST",
         body: data,
         headers: { Accept: "application/json" },
@@ -133,16 +146,36 @@ const Contact = () => {
               className="w-full justify-center py-4 disabled:opacity-70 disabled:cursor-not-allowed"
             />
 
-            {status === "success" && (
-              <p className="text-emerald-400 text-center mt-2 font-medium">
-                ✓ Message sent — I'll get back to you soon.
-              </p>
-            )}
-            {status === "error" && (
-              <p className="text-red-400 text-center mt-2 font-medium">
-                ✕ Something went wrong. Please try again.
-              </p>
-            )}
+            {/* Always mounted so screen readers register the live region before
+                a message is inserted. empty:!mt-0 stops the parent's space-y gap
+                from adding blank space under the button while no message shows. */}
+            <div aria-live="polite" className="empty:!mt-0">
+              {status === "success" && (
+                <p className="text-emerald-400 text-center mt-2 font-medium">
+                  ✓ Message sent — I'll get back to you soon.
+                </p>
+              )}
+              {status === "error" && (
+                <p className="text-red-400 text-center mt-2 font-medium">
+                  ✕ Something went wrong. Please try again.
+                </p>
+              )}
+              {status === "unconfigured" && (
+                <p className="text-red-400 text-center mt-2 font-medium">
+                  ✕ Messages can't be sent from this form right now. Please
+                  reach me on{" "}
+                  <a
+                    href={LINKEDIN_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent underline underline-offset-4 hover:text-accent-bright transition-colors"
+                  >
+                    LinkedIn
+                  </a>
+                  .
+                </p>
+              )}
+            </div>
           </div>
         </motion.form>
 

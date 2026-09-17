@@ -1,6 +1,15 @@
 import { motion, useSpring } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
+// Touch screens (including tablets wider than 768px) do not match this query.
+// They get no custom cursor, and their native pointer is left alone.
+const FINE_POINTER_QUERY = "(hover: hover) and (pointer: fine)";
+
+const matchesFinePointer = () =>
+  typeof window !== "undefined" &&
+  typeof window.matchMedia === "function" &&
+  window.matchMedia(FINE_POINTER_QUERY).matches;
+
 const DefaultCursorSVG = () => {
   return (
     <svg
@@ -72,7 +81,8 @@ export default function Cursor({
     restDelta: 0.001,
   },
 } = {}) {
-  const [isMoving, setIsMoving] = useState(false);
+  const [hasFinePointer, setHasFinePointer] = useState(matchesFinePointer);
+  const scaleResetTimeout = useRef(null);
   const lastMousePos = useRef({ x: 0, y: 0 });
   const velocity = useRef({ x: 0, y: 0 });
   const lastUpdateTime = useRef(Date.now());
@@ -92,7 +102,25 @@ export default function Cursor({
     damping: 35,
   });
 
+  // Follow pointer-capability changes, e.g. a convertible laptop switching into
+  // tablet mode or a mouse being connected to a tablet.
   useEffect(() => {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+      return;
+    }
+
+    const mediaQueryList = window.matchMedia(FINE_POINTER_QUERY);
+    const handlePointerChange = (event) => setHasFinePointer(event.matches);
+
+    mediaQueryList.addEventListener("change", handlePointerChange);
+    return () => {
+      mediaQueryList.removeEventListener("change", handlePointerChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!hasFinePointer) return;
+
     const updateVelocity = (currentPos) => {
       const currentTime = Date.now();
       const deltaTime = currentTime - lastUpdateTime.current;
@@ -132,14 +160,14 @@ export default function Cursor({
         previousAngle.current = currentAngle;
 
         scale.set(0.95);
-        setIsMoving(true);
 
-        const timeout = setTimeout(() => {
+        // One pending reset at a time: each new movement pushes the reset back
+        // instead of stacking another timer.
+        clearTimeout(scaleResetTimeout.current);
+        scaleResetTimeout.current = setTimeout(() => {
           scale.set(1);
-          setIsMoving(false);
+          scaleResetTimeout.current = null;
         }, 150);
-
-        return () => clearTimeout(timeout);
       }
     };
 
@@ -160,15 +188,19 @@ export default function Cursor({
       window.removeEventListener("mousemove", throttledMouseMove);
       document.body.style.cursor = "auto";
       if (rafId) cancelAnimationFrame(rafId);
+      clearTimeout(scaleResetTimeout.current);
+      scaleResetTimeout.current = null;
     };
-  }, [cursorX, cursorY, rotation, scale]);
+  }, [hasFinePointer, cursorX, cursorY, rotation, scale]);
 
-  // Keep the CSS override to ensure the default cursor is fully hidden over links and buttons
-  // Only on desktop — mobile/tablet users need the native cursor
+  // Keep the CSS override to ensure the default cursor is fully hidden over links and buttons.
+  // Scoped to fine-pointer devices so touch users keep the native cursor.
   useEffect(() => {
+    if (!hasFinePointer) return;
+
     const style = document.createElement('style');
     style.innerHTML = `
-      @media (min-width: 768px) {
+      @media ${FINE_POINTER_QUERY} {
         * {
           cursor: none !important;
         }
@@ -179,11 +211,12 @@ export default function Cursor({
     return () => {
       document.head.removeChild(style);
     };
-  }, []);
+  }, [hasFinePointer]);
+
+  if (!hasFinePointer) return null;
 
   return (
     <motion.div
-      className="hidden md:block"
       style={{
         position: "fixed",
         left: cursorX,

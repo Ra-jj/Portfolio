@@ -40,6 +40,7 @@ export const journey = [
         name: "Chatify",
         link: "https://github.com/Ra-jj/chatify.git",
         liveLink: "https://rajcodes-chatify.onrender.com",
+        coldStart: true,
       }
     ],
   },
@@ -54,6 +55,7 @@ export const journey = [
         name: "Donor",
         link: "https://github.com/Ra-jj/Donor.git",
         liveLink: "https://rajcodes-donor.onrender.com",
+        coldStart: true,
       }
     ],
   },

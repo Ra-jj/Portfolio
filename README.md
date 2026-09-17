@@ -2,7 +2,7 @@
 
 > A scroll-driven, story-first developer portfolio that walks through my journey from electronics engineering to building production-grade full-stack applications.
 
-🔗 **[View Live](https://rajcodes-portfolio.vercel.app)**
+🔗 **[View Live](https://monodip-portfolio.vercel.app)**
 
 ---
 
@@ -46,7 +46,7 @@ src/
 ## Connect
 
 - **GitHub**: [Ra-jj](https://github.com/Ra-jj)
-- **LinkedIn**: [Monodip Bhattacharya](https://linkedin.com/in/)
+- **LinkedIn**: [Monodip Bhattacharya](https://www.linkedin.com/in/monodip-bhattacharya-b31768327/)
 
 ---
 

@@ -37,7 +37,7 @@ function App() {
               <FaGithub size={20} className="text-slate-300 group-hover:text-accent transition-colors" />
             </a>
             <a
-              href="https://linkedin.com/in/"
+              href="https://www.linkedin.com/in/monodip-bhattacharya-b31768327/"
               target="_blank"
               rel="noopener noreferrer"
               className="group grid place-items-center h-11 w-11 rounded-xl surface hover:glow-ring transition-all"

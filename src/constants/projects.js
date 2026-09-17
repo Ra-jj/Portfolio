@@ -2,6 +2,12 @@ import chatifyImg from "../assets/Chatify.png";
 import resumeImg from "../assets/AI Resume.png";
 import donorImg from "../assets/Donor.png";
 
+// Shown next to live links flagged `coldStart`. Measured first loads (Sept 2026):
+// Render-hosted Chatify 32.7s and Donor 31.7s; Vercel-hosted AI Resume Analyzer 0.9s.
+export const COLD_START_HINT = "~30s to wake";
+export const COLD_START_TITLE =
+  "Free-tier hosting: the first load can take about 30 seconds while the server wakes up.";
+
 export const projects = [
   {
     id: 1,
@@ -10,6 +16,7 @@ export const projects = [
     tags: ["React.js", "Node.js", "Express", "MongoDB", "Socket.io", "TailwindCSS", "Zustand"],
     sourceCode: "https://github.com/Ra-jj/chatify.git",
     liveDemo: "https://rajcodes-chatify.onrender.com",
+    coldStart: true,
     image: chatifyImg,
   },
   {
@@ -28,6 +35,7 @@ export const projects = [
     tags: ["React.js", "Node.js", "Express", "MongoDB", "Socket.io", "TailwindCSS"],
     sourceCode: "https://github.com/Ra-jj/Donor.git",
     liveDemo: "https://rajcodes-donor.onrender.com",
+    coldStart: true,
     image: donorImg,
   },
 ];

@@ -108,7 +108,7 @@ const Hero = () => {
             <FlowButton
               text="View Resume"
               as="a"
-              href="/Resume.pdf"
+              href="/Monodip_Bhattacharya_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               variant="outline"

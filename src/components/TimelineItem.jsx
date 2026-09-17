@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { HiOutlineCode, HiOutlineExternalLink } from "react-icons/hi";
 import { cn } from "../lib/utils";
+import { COLD_START_HINT, COLD_START_TITLE } from "../constants/projects";
 import { BorderBeam } from "border-beam";
 
 const TimelineItem = ({ data, isLeft }) => {
@@ -81,11 +82,16 @@ const TimelineItem = ({ data, isLeft }) => {
                         </a>
                       )}
                       {(proj.isLive || proj.liveLink) && (
-                        <a href={proj.liveLink || proj.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 text-xs text-slate-300 hover:text-accent transition-colors">
+                        <a href={proj.liveLink || proj.link} target="_blank" rel="noopener noreferrer" title={proj.coldStart ? COLD_START_TITLE : undefined} className="inline-flex items-center justify-center gap-2 text-xs text-slate-300 hover:text-accent transition-colors">
                           <HiOutlineExternalLink size={16} /> Live Demo
                         </a>
                       )}
                     </div>
+                    {proj.coldStart && (proj.isLive || proj.liveLink) && (
+                      <p className="mt-2 text-[10px] font-mono text-slate-400">
+                        {COLD_START_HINT}
+                      </p>
+                    )}
                   </div>
                 ))}
               </div>
