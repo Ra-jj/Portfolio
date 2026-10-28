@@ -4,7 +4,7 @@ import { useSyncExternalStore } from "react";
 const LCD_FONT = '800 24px "Doto Variable"';
 
 /** After this long the LCDs start anyway, in whatever face is available. */
-export const LCD_FONT_TIMEOUT_MS = 1500;
+const LCD_FONT_TIMEOUT_MS = 1500;
 
 let isSettled = false;
 let settledPromise = null;

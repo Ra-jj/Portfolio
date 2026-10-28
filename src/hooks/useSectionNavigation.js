@@ -3,14 +3,14 @@ import { SECTION_IDS } from "../constants/navigation";
 import { prefersReducedMotion } from "./useReducedMotion";
 
 /** Wait before scrolling so the keycap press is seen (design-plan 6.4). */
-export const PRESS_TO_SCROLL_DELAY_MS = 120;
+const PRESS_TO_SCROLL_DELAY_MS = 120;
 
 /** Events that mean the visitor has taken over scrolling. Never `scroll`. */
 const INTERACTION_EVENTS = ["wheel", "touchstart", "keydown", "pointerdown"];
 const INTERACTION_LISTENER_OPTIONS = { capture: true, passive: true };
 
 /** The section id named by location.hash, or null if it names none. */
-export function readHashSectionId() {
+function readHashSectionId() {
   const id = window.location.hash.slice(1);
   return SECTION_IDS.includes(id) ? id : null;
 }
@@ -20,7 +20,7 @@ export function readHashSectionId() {
  * tab, new window, download), a non-primary button, or a click another
  * handler already took over.
  */
-export function isModifiedClick(event) {
+function isModifiedClick(event) {
   return (
     event.defaultPrevented ||
     event.button !== 0 ||

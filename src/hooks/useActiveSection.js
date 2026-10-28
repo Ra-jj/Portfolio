@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 /** The sections the sticky bar can mark as active (the hero is not one). */
-export const ACTIVE_SECTION_IDS = Object.freeze([
+const ACTIVE_SECTION_IDS = Object.freeze([
   "timeline",
   "projects",
   "skills",
@@ -12,7 +12,7 @@ export const ACTIVE_SECTION_IDS = Object.freeze([
  * A thin band 45% to 50% down the viewport. The section crossing it is the
  * one being read (design-plan section 7.2).
  */
-export const ACTIVE_SECTION_ROOT_MARGIN = "-45% 0px -50% 0px";
+const ACTIVE_SECTION_ROOT_MARGIN = "-45% 0px -50% 0px";
 const BAND_TOP = 0.45;
 const BAND_BOTTOM = 0.5;
 

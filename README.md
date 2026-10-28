@@ -39,7 +39,10 @@ The calculator, LCDs, receipt and keycaps are HTML and CSS. There is no three.js
 
 ```
 src/
+├── main.jsx              # Entry: fonts, styles, React root
 ├── App.jsx               # Page order, skip link, sticky bar, footer
+├── index.css             # Design tokens and the instrument's component styles
+├── assets/               # Project screenshots (WebP)
 ├── components/
 │   ├── Hero.jsx          # Name, intro and the calculator
 │   ├── StickyBar.jsx     # Key bar after the hero, with a mini LCD
@@ -57,8 +60,11 @@ src/
 │   ├── projects.js       # Featured projects
 │   └── skills.js         # Skill bands
 ├── context/              # Shared navigation, LCD messages and the shortcuts switch
-├── hooks/                # Section navigation, shortcuts, active section, in-view, reduced motion
-└── lib/                  # Shared utilities
+├── hooks/                # Section navigation, shortcuts, active section, in-view,
+│                         # key press hold, LCD font loading, page visibility, reduced motion
+└── lib/                  # Shared utilities (class-name helper)
+
+public/                   # Resume PDF, favicon, social preview image
 ```
 
 > Projects, journey, skills and every navigation label, URL and key message on the LCDs live in `src/constants/`; headings and section copy are in the components.
@@ -67,7 +73,10 @@ src/
 
 ```bash
 npm install
-npm run dev
+npm run dev       # local dev server
+npm run build     # production build in dist/
+npm run preview   # serve the production build
+npm run lint      # oxlint
 ```
 
 The contact form sends through Formspree. Set `VITE_FORMSPREE_ENDPOINT` to your form's endpoint (for example in `.env.local`) before building; without it, the form tells visitors to message on LinkedIn instead.

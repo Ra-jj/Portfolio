@@ -6,7 +6,7 @@ import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { LcdScreen } from "../calculator/Lcd";
 
 /** A 16x2 character LCD: no row may be longer than this. */
-export const CONTACT_LCD_COLUMNS = 16;
+const CONTACT_LCD_COLUMNS = 16;
 
 /** Row 1: the result of the hero's "=" key. */
 const RESULT_ROW = "= LET'S TALK";

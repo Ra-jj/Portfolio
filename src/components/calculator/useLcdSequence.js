@@ -2,7 +2,7 @@ import { useCallback, useEffect, useReducer, useState } from "react";
 import { LCD_TITLE, TAGLINES } from "../../constants/navigation";
 
 /** Script timings from design-plan section 6.3, in milliseconds. */
-export const LCD_TIMING = Object.freeze({
+const LCD_TIMING = Object.freeze({
   powerOn: 150, // glass tint and ghost cells fade in
   clear: 150, // AC: blank display before the intro replays
   titleCharacter: 55,

@@ -29,7 +29,7 @@ function isNothingFocused() {
  * Maps a keydown event to a key from the key map, or null when the event must
  * be left alone (design-plan 6.5).
  */
-export function resolveShortcut(event) {
+function resolveShortcut(event) {
   if (
     event.defaultPrevented ||
     event.repeat ||

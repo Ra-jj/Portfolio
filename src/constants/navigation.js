@@ -16,10 +16,10 @@ export const SECTION_IDS = Object.freeze([
   "contact",
 ]);
 
-export const GITHUB_URL = "https://github.com/Ra-jj";
+const GITHUB_URL = "https://github.com/Ra-jj";
 export const LINKEDIN_URL =
   "https://www.linkedin.com/in/monodip-bhattacharya-b31768327/";
-export const RESUME_URL = "/Monodip_Bhattacharya_Resume.pdf";
+const RESUME_URL = "/Monodip_Bhattacharya_Resume.pdf";
 
 /** A 20x2 character LCD: no row may be longer than this. */
 export const LCD_COLUMNS = 20;
@@ -208,7 +208,7 @@ export function findKeyByShortcut(character) {
  * Checks the table against the device's physical limits. Returns a list of
  * problems (empty when the table is valid). Run in development only.
  */
-export function findKeyMapProblems() {
+function findKeyMapProblems() {
   const problems = [];
   const seenShortcuts = new Set();
 
