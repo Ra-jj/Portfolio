@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local design references (plan + third-party inspiration images); not for the public repo
+design-refs/
