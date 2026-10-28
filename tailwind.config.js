@@ -6,75 +6,51 @@ export default {
   ],
   theme: {
     extend: {
+      // "The instrument" palette (design-plan section 2). One cool grey family,
+      // one signal colour, one material. `slate` is a single value on purpose:
+      // it replaces Tailwind's default slate scale, so `text-slate-400` and
+      // friends no longer exist. Use opacity modifiers (`border-slate/25`).
       colors: {
-        primary: "#05070d", // deeper near-black for bold contrast
-        secondary: "#0d1320", // elevated surface
-        "secondary-2": "#141b2d", // secondary surface variant
-        accent: "#38bdf8", // sky-400 (signature accent)
-        "accent-bright": "#7dd3fc", // sky-300 (hover/highlight)
-        "accent-deep": "#0284c7", // sky-600 (pressed)
-        glow: "#22d3ee", // cyan-400 (glow ring)
+        aluminium: "#CBD0D3", // page chassis, in-page keycaps, footer
+        panel: "#E8EBED", // raised device faces, receipt paper, form fields
+        slate: "#3A3F45", // secondary text, silkscreen, dark keycaps, bezels
+        ink: "#131518", // primary text, LCD dots, focus ring
+        signal: "#F26419", // "=" keys, Send message, lit LEDs. Never text.
+        lcd: "#B3BFAC", // LCD glass, only inside a bezel
       },
+      // Each face stands for one manufacturing process (design-plan section 3).
+      // Family names are the ones declared by the Fontsource packages imported
+      // in src/main.jsx.
       fontFamily: {
         sans: [
-          "Inter",
+          '"Archivo Variable"',
           "ui-sans-serif",
           "system-ui",
           "-apple-system",
           "Segoe UI",
-          "Roboto",
           "sans-serif",
         ],
-        display: [
-          "Inter",
-          "ui-sans-serif",
-          "system-ui",
-          "sans-serif",
-        ],
-        mono: [
-          "JetBrains Mono",
+        receipt: [
+          '"Martian Mono Variable"',
           "ui-monospace",
           "SFMono-Regular",
           "Menlo",
           "monospace",
         ],
+        lcd: ['"Doto Variable"', "ui-monospace", "monospace"],
+      },
+      // The only z-index values on the page (design-plan section 5).
+      zIndex: {
+        printer: "10",
+        bar: "40",
+        skip: "50",
       },
       boxShadow: {
-        glow: "0 0 0 1px rgba(56,189,248,0.35), 0 10px 40px -10px rgba(56,189,248,0.45)",
-        "glow-strong": "0 0 0 1px rgba(56,189,248,0.55), 0 20px 60px -10px rgba(56,189,248,0.6)",
-        card: "0 1px 0 0 rgba(255,255,255,0.04) inset, 0 20px 60px -20px rgba(0,0,0,0.8)",
-      },
-      backgroundImage: {
-        "grid-fade":
-          "linear-gradient(to bottom, rgba(56,189,248,0.08), rgba(56,189,248,0) 70%), radial-gradient(circle at 50% 0%, rgba(56,189,248,0.12), transparent 60%)",
-        "radial-spot":
-          "radial-gradient(60% 60% at 50% 0%, rgba(56,189,248,0.18) 0%, rgba(56,189,248,0) 60%)",
-        "text-gradient":
-          "linear-gradient(135deg, #7dd3fc 0%, #38bdf8 35%, #22d3ee 70%, #38bdf8 100%)",
-      },
-      keyframes: {
-        "gradient-pan": {
-          "0%, 100%": { backgroundPosition: "0% 50%" },
-          "50%": { backgroundPosition: "100% 50%" },
-        },
-        shimmer: {
-          "0%": { transform: "translateX(-100%)" },
-          "100%": { transform: "translateX(100%)" },
-        },
-        "pulse-glow": {
-          "0%, 100%": { opacity: "0.6", transform: "scale(1)" },
-          "50%": { opacity: "1", transform: "scale(1.15)" },
-        },
-        "fade-up": {
-          "0%": { opacity: "0", transform: "translateY(12px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-      },
-      animation: {
-        "gradient-pan": "gradient-pan 8s ease-in-out infinite",
-        shimmer: "shimmer 2.5s linear infinite",
-        "pulse-glow": "pulse-glow 3s ease-in-out infinite",
-        "fade-up": "fade-up 0.6s ease-out forwards",
+        // Device bodies resting on the chassis: slate-tinted, light from the
+        // top left, plus the top-edge highlight.
+        // Keycap skirts are drawn by .keycap in src/index.css.
+        device:
+          "0 18px 40px -18px rgb(58 63 69 / 0.45), 0 2px 0 rgb(58 63 69 / 0.18), inset 0 1px 0 rgb(232 235 237 / 0.9)",
       },
     },
   },

@@ -1,88 +1,65 @@
-import { motion } from "framer-motion";
 import { skillGroups } from "../constants/skills";
 
-const containerVariant = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.08 } },
-};
-
-const itemVariant = {
-  hidden: { opacity: 0, y: 16 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.45 } },
-};
-
-const Skills = () => {
+/**
+ * One band of the dial: its label (title and description), then its scale.
+ * Each skill is a printed station, its name above a major tick; the minor
+ * ticks are a gradient on the scale line. Position means category, never
+ * level. Stations are plain list items: not focusable, no action.
+ *
+ * The pointer is decoration for hover-capable devices only: CSS moves it to
+ * the hovered station (`:has()` sets --pointer-index, see .band-scale in
+ * src/index.css). Nothing reads it, so it is hidden from assistive tech.
+ */
+function Band({ group }) {
   return (
-    <section
-      id="skills"
-      className="py-20 md:py-32 bg-secondary/30 relative w-full border-y border-white/5"
-    >
-      <div className="absolute inset-0 pointer-events-none bg-grid-fade opacity-40" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 relative">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <span className="inline-block chip mb-4">stack</span>
-          <h2 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">
-            Skills gained
-          </h2>
-          <p className="text-slate-400 max-w-2xl mx-auto text-lg">
-            Tools and technologies I've picked up along my journey to build
-            better digital experiences.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7">
-          {skillGroups.map((group, index) => (
-            <motion.div
-              key={index}
-              variants={containerVariant}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-              className="group relative surface rounded-2xl p-6 shadow-card hover:glow-ring transition-all duration-300"
-            >
-              <div className="relative flex items-center gap-3 mb-3">
-                <span className="grid place-items-center h-9 w-9 rounded-lg bg-accent/10 border border-accent/20 text-accent font-mono text-sm font-bold">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3 className="text-lg font-bold text-white tracking-tight">
-                  {group.title}
-                </h3>
-              </div>
-              <p className="relative text-sm text-slate-400 mb-6 leading-relaxed">
-                {group.description}
-              </p>
-
-              <div className="relative grid grid-cols-2 gap-3">
-                {group.skills.map((skill, i) => (
-                  <motion.div
-                    key={i}
-                    variants={itemVariant}
-                    whileHover={{ y: -2 }}
-                    className="relative flex flex-col items-center justify-center p-3 bg-white/[0.02] border border-white/5 rounded-xl hover:bg-accent/[0.08] hover:border-accent/40 transition-all group/skill overflow-hidden"
-                  >
-                    <skill.icon
-                      className={`text-3xl mb-2 ${skill.color} group-hover/skill:scale-110 group-hover/skill:rotate-3 transition-transform duration-300`}
-                    />
-                    <span className="text-[11px] font-medium text-slate-300 text-center tracking-tight">
-                      {skill.name}
-                    </span>
-                    <span className="pointer-events-none absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent opacity-0 group-hover/skill:opacity-100 transition-opacity" />
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </div>
+    <div className="band">
+      <div className="band-label">
+        <h3 className="text-lg font-semibold leading-snug text-ink">{group.title}</h3>
+        <p className="mt-1 text-sm leading-relaxed text-slate">{group.description}</p>
       </div>
-    </section>
+
+      <div className="band-scale">
+        <ul className="band-stations">
+          {group.skills.map((name) => (
+            <li key={name} className="band-station">
+              <span className="band-station-name">{name}</span>
+              <span aria-hidden="true" className="band-station-tick" />
+            </li>
+          ))}
+        </ul>
+        <span aria-hidden="true" className="band-pointer" />
+      </div>
+    </div>
   );
-};
+}
+
+/**
+ * Skills (design-plan 7.5): a radio band scale. Five bands inside one panel,
+ * separated by hairlines. lg+: label in columns 1-3, scale in 4-12 with four
+ * equal stations. md: label above, four stations in a row. Phones: label,
+ * then the stations two by two.
+ */
+const Skills = () => (
+  <section id="skills" className="py-20 md:py-24">
+    <div className="mx-auto max-w-[1200px] px-3 sm:px-6 lg:px-8">
+      <h2
+        tabIndex={-1}
+        className="text-[32px] font-extrabold leading-[1.05] tracking-[-0.015em] text-ink md:text-[40px] xl:text-[48px]"
+      >
+        Skills gained
+      </h2>
+      <p className="mt-4 max-w-[52ch] text-base leading-relaxed text-slate lg:text-[17px]">
+        Tools and technologies I've picked up along my journey to build better digital
+        experiences.
+      </p>
+
+      <div className="band-panel mt-10 md:mt-12">
+        {skillGroups.map((group) => (
+          <Band key={group.title} group={group} />
+        ))}
+      </div>
+    </div>
+  </section>
+);
 
 export default Skills;

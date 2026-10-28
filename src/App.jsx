@@ -1,63 +1,36 @@
-import AnimatedNav from "./components/ui/AnimatedNav";
 import Hero from "./components/Hero";
 import Timeline from "./components/Timeline";
-import Skills from "./components/Skills";
 import Projects from "./components/Projects";
+import Skills from "./components/Skills";
 import Contact from "./components/Contact";
-import Cursor from "./components/ui/Cursor";
-import WebStrings from "./components/ui/WebStrings";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import Footer from "./components/Footer";
+import StickyBar from "./components/StickyBar";
+import { InstrumentProvider } from "./context/InstrumentContext";
 
+// No overflow clipping wrapper here: overflow hidden on an ancestor breaks
+// position: sticky (the sticky bar and the Journey printer).
 function App() {
   return (
-    <div className="bg-primary min-h-screen text-slate-200 selection:bg-accent/30 selection:text-accent relative overflow-hidden">
-      <WebStrings />
-      <Cursor />
-      <div className="relative z-10">
-        <AnimatedNav />
+    <InstrumentProvider>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-skip focus:rounded-lg focus:bg-panel focus:px-4 focus:py-3 focus:font-semibold focus:text-ink focus:shadow-device"
+      >
+        Skip to content
+      </a>
 
-        <main>
-          <Hero />
-          <Timeline />
-          <Skills />
-          <Projects />
-          <Contact />
-        </main>
+      <StickyBar />
 
-        <footer className="relative py-10 sm:py-14 bg-primary text-center border-t border-white/5 flex flex-col items-center px-4">
-          <div className="hairline w-24 h-px mb-8" />
-          <div className="flex gap-3 mb-6">
-            <a
-              href="https://github.com/Ra-jj"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group grid place-items-center h-11 w-11 rounded-xl surface hover:glow-ring transition-all"
-              aria-label="GitHub"
-            >
-              <FaGithub size={20} className="text-slate-300 group-hover:text-accent transition-colors" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/monodip-bhattacharya-b31768327/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group grid place-items-center h-11 w-11 rounded-xl surface hover:glow-ring transition-all"
-              aria-label="LinkedIn"
-            >
-              <FaLinkedin size={20} className="text-slate-300 group-hover:text-accent transition-colors" />
-            </a>
-          </div>
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-white font-semibold tracking-tight">
-              Monodip
-            </span>
-            <span className="text-accent font-semibold">.</span>
-          </div>
-          <p className="text-slate-500 text-xs font-mono">
-            © {new Date().getFullYear()}
-          </p>
-        </footer>
-      </div>
-    </div>
+      <main id="main" tabIndex={-1}>
+        <Hero />
+        <Timeline />
+        <Projects />
+        <Skills />
+        <Contact />
+      </main>
+
+      <Footer />
+    </InstrumentProvider>
   );
 }
 

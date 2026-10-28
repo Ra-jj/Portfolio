@@ -1,62 +1,37 @@
-import {
-  FaReact,
-  FaNodeJs,
-  FaPython,
-  FaHtml5,
-  FaGithub
-} from "react-icons/fa";
-import {
-  SiJavascript,
-  SiTypescript,
-  SiTailwindcss,
-  SiMongodb,
-  SiExpress,
-  SiMysql,
-  SiSocketdotio
-} from "react-icons/si";
-import { TbApi } from "react-icons/tb";
-import { FaMicrochip } from "react-icons/fa";
-import { Layers } from "lucide-react";
-
+/**
+ * Skills, as the bands of a radio dial scale (design-plan 7.5, user decision
+ * 0.9): five bands of four stations. A station's position on its band means
+ * category, never level, so there are no proficiency numbers here and none
+ * may be added.
+ *
+ * Every skill comes from the resume (public/Monodip_Bhattacharya_Resume.pdf)
+ * or from this file's earlier content. Names must stay short enough to fit
+ * one station (about 120 px at 14 px on a 320 px phone).
+ */
 export const skillGroups = [
   {
     title: "The Foundation",
     description: "The core languages and technologies I use.",
-    skills: [
-      { name: "JavaScript", icon: SiJavascript, color: "text-yellow-400" },
-      { name: "TypeScript", icon: SiTypescript, color: "text-blue-600" },
-      { name: "Python", icon: FaPython, color: "text-blue-400" },
-      { name: "HTML5 & CSS3", icon: FaHtml5, color: "text-orange-500" },
-    ]
+    skills: ["JavaScript", "TypeScript", "Python", "HTML5 & CSS3"],
   },
   {
     title: "The Modern Stack",
     description: "My primary tools for building interactive frontends.",
-    skills: [
-      { name: "React.js", icon: FaReact, color: "text-sky-400" },
-      { name: "Tailwind CSS", icon: SiTailwindcss, color: "text-teal-400" },
-      { name: "DaisyUI", icon: SiTailwindcss, color: "text-purple-400" },
-      { name: "Zustand", icon: Layers, color: "text-orange-400" },
-    ]
+    skills: ["React.js", "Tailwind CSS", "DaisyUI", "Zustand"],
   },
   {
     title: "Backend & Data",
     description: "Navigating servers, real-time systems, and databases.",
-    skills: [
-      { name: "Node.js", icon: FaNodeJs, color: "text-green-500" },
-      { name: "Express.js", icon: SiExpress, color: "text-gray-300" },
-      { name: "MongoDB", icon: SiMongodb, color: "text-green-400" },
-      { name: "Socket.io", icon: SiSocketdotio, color: "text-white" },
-    ]
+    skills: ["Node.js", "Express.js", "MongoDB", "Socket.io"],
   },
   {
     title: "Tools & Hardware",
-    description: "Version control, APIs, security, and IoT.",
-    skills: [
-      { name: "REST APIs", icon: TbApi, color: "text-sky-300" },
-      { name: "MySQL", icon: SiMysql, color: "text-blue-500" },
-      { name: "Git & GitHub", icon: FaGithub, color: "text-white" },
-      { name: "Arduino / IoT", icon: FaMicrochip, color: "text-emerald-500" },
-    ]
-  }
+    description: "Version control, APIs, databases, and IoT.",
+    skills: ["REST APIs", "MySQL", "Git & GitHub", "Arduino / IoT"],
+  },
+  {
+    title: "Testing & Security",
+    description: "Automated tests, CI, authentication, and installable web apps.",
+    skills: ["Jest", "GitHub Actions", "JWT auth", "PWA"],
+  },
 ];

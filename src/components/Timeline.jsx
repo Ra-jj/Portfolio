@@ -1,50 +1,110 @@
+import { useRef } from "react";
 import { journey } from "../constants/journey";
-import TimelineItem from "./TimelineItem";
-import { motion } from "framer-motion";
+import { AVAILABILITY, KEYS_BY_ID } from "../constants/navigation";
+import { useInstrument } from "../context/instrument";
+import { usePressHold } from "../hooks/usePressHold";
+import Printer from "./receipt/Printer";
+import ReceiptEntry from "./receipt/ReceiptEntry";
 
-const SectionHeader = ({ kicker, title, subtitle }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.6 }}
-    className="text-center mb-16"
-  >
-    <span className="inline-block chip mb-4">{kicker}</span>
-    <h2 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">
-      {title}
-    </h2>
-    <p className="text-slate-400 max-w-2xl mx-auto text-lg">{subtitle}</p>
-  </motion.div>
-);
+const TALK_KEY = KEYS_BY_ID.talk;
 
-const Timeline = () => {
+/**
+ * The small "=" key at the end of the receipt. Same behaviour as the other
+ * in-page keys (design-plan 6.4): the cap travels, the LCDs show the key's
+ * message, and the shared navigation goes to #contact (modified clicks are
+ * left to the browser). It presses only itself, not the hero or bar "=".
+ */
+function ReceiptTalkKey() {
+  const { flashMessage, followSectionLink } = useInstrument();
+  const [isPressed, press] = usePressHold();
+
+  const handleClick = (event) => {
+    press();
+    flashMessage(TALK_KEY.lcd, { keyId: TALK_KEY.id });
+    followSectionLink(event, TALK_KEY.target);
+  };
+
   return (
-    <section id="timeline" className="py-20 md:py-32 bg-primary relative w-full">
-      {/* Subtle accent backdrop */}
-      <div className="absolute inset-0 pointer-events-none bg-grid-fade opacity-60" />
+    <a
+      href={TALK_KEY.href}
+      aria-label={TALK_KEY.label}
+      data-pressed={isPressed ? "" : undefined}
+      onClick={handleClick}
+      className="keycap keycap-signal receipt-key"
+    >
+      <span aria-hidden="true" className="keycap-glyph receipt-key-glyph">
+        {TALK_KEY.glyph}
+      </span>
+      <span className="keycap-legend">{TALK_KEY.legend}</span>
+    </a>
+  );
+}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 relative">
-        <SectionHeader
-          kicker="journey"
-          title="How I got here"
-          subtitle="A look back at the milestones, lessons, and turning points that shaped how I build today."
-        />
+/**
+ * Journey (design-plan 7.3): the milestones print on a receipt that feeds
+ * out of a sticky printer as the page scrolls. Native scroll and CSS sticky
+ * only; the printer's counter and LED use IntersectionObservers.
+ *
+ * lg+: heading sticky in columns 1-4, receipt in columns 5-12. Below lg the
+ * heading sits above the receipt. The receipt column holds the paper, then
+ * the printer, and must have no overflow clipping on any ancestor.
+ */
+const Timeline = () => {
+  const paperRef = useRef(null);
 
-        <div className="relative wrap p-2 sm:p-4 h-full">
-          {/* Vertical line with gradient */}
-          <div className="absolute left-[28px] md:left-1/2 -translate-x-1/2 top-0 bottom-0 w-[2px]">
-            <div className="h-full w-full bg-gradient-to-b from-transparent via-accent/30 to-transparent" />
+  return (
+    <section id="timeline" className="py-20 md:py-24">
+      <div className="mx-auto grid max-w-[1200px] px-3 sm:px-6 lg:grid-cols-12 lg:gap-8 lg:px-8">
+        <div className="receipt-heading lg:col-span-4">
+          <h2
+            tabIndex={-1}
+            className="text-[32px] font-extrabold leading-[1.05] tracking-[-0.015em] text-ink md:text-[40px] xl:text-[48px]"
+          >
+            How I got here
+          </h2>
+          <p className="mt-4 max-w-[40ch] text-base leading-relaxed text-slate lg:text-[17px]">
+            A look back at the milestones, lessons, and turning points that shaped how I build
+            today.
+          </p>
+        </div>
+
+        <div className="receipt-column mt-12 lg:col-span-8 lg:mt-0">
+          <div ref={paperRef} className="receipt-paper receipt-text">
+            <p className="receipt-header">
+              <span className="receipt-header-name">Monodip Bhattacharya</span>
+              <span className="block">From electronics to full-stack</span>
+            </p>
+
+            <ol className="receipt-entries">
+              {journey.map((entry, index) => (
+                <ReceiptEntry key={entry.id} entry={entry} sequence={index + 1} />
+              ))}
+            </ol>
+
+            <div className="receipt-footer">
+              <dl>
+                <div className="receipt-line">
+                  <dt>Items</dt>
+                  <dd>{journey.length}</dd>
+                </div>
+                <div className="receipt-line">
+                  <dt>Now</dt>
+                  <dd>{AVAILABILITY}</dd>
+                </div>
+              </dl>
+              <p className="receipt-key-row">
+                <ReceiptTalkKey />
+              </p>
+            </div>
+
+            {/* Fresh ink: sticks right above the printer's slot (see .receipt-ink). */}
+            <div aria-hidden="true" className="receipt-ink" />
+
+            {/* The last edge of the paper: once it is above the slot, printing is over. */}
+            <span data-receipt-end="" aria-hidden="true" className="receipt-end" />
           </div>
 
-          {journey.map((item, index) => (
-            <TimelineItem
-              key={item.id}
-              data={item}
-              index={index}
-              isLeft={index % 2 === 0}
-            />
-          ))}
+          <Printer paperRef={paperRef} total={journey.length} />
         </div>
       </div>
     </section>

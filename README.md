@@ -1,47 +1,76 @@
-# Monodip Bhattacharya — Portfolio
+# Monodip Bhattacharya: Portfolio
 
-> A scroll-driven, story-first developer portfolio that walks through my journey from electronics engineering to building production-grade full-stack applications.
+> A developer portfolio built as one light-grey instrument: a calculator that navigates, a receipt printer that tells the journey, rack modules for projects, a radio band scale for skills, and an "=" panel for getting in touch.
 
-🔗 **[View Live](https://monodip-portfolio.vercel.app)**
+**[View live](https://monodip-portfolio.vercel.app)**
 
 ---
 
 ## What's Inside
 
-- **Narrative Timeline** — A vertical timeline that tells the story of how I got here, driven by a single data file.
-- **3D Starfield Hero** — A lightweight React Three Fiber canvas with animated stars.
-- **Animated Navigation** — A collapsible pill-style navbar that responds to scroll direction.
-- **Border Beam Effects** — Glowing animated borders on project cards and timeline items.
-- **Custom Cursor & Web Strings** — Interactive visual effects for a premium feel.
-- **Contact Form** — Serverless form handling via Formspree.
-- **Fully Responsive** — Mobile-first design with adaptive layouts across all breakpoints.
+- **Calculator hero.** The calculator's keys are the site navigation: journey, projects, skills, resume, GitHub, LinkedIn, `ac` and `= let's talk`. Its 20x2 character LCD types `MONODIP.PORTFOLIO`, cycles real taglines, and previews where each key goes on hover or focus. A `hold` switch pauses the display.
+- **Keyboard shortcuts.** J, P, S, R, G, L, C and `=`, with a `shortcuts` switch to turn them off. They never fire while you type in a field.
+- **Sticky key bar.** Once the calculator scrolls away, a compact bar takes over with a mini LCD, a lit LED on the section you are reading, and "Back to calculator".
+- **Receipt-printer journey.** Each milestone prints on thermal paper that feeds out of a printer docked to the bottom of the screen as you scroll (native scroll and `position: sticky`, no scroll listeners).
+- **Rack-module projects.** Real screenshots in screen bezels, with the stack and keycap links to the source code and live demo.
+- **Band-scale skills.** Each skill group is a band on a radio tuning dial; position means category, never level.
+- **"=" contact panel.** A Formspree form whose 16x2 LCD reports its real state (ready, fields to check, sending, sent, not sent), with an error summary, inline errors and announced results.
+- **Accessible and responsive.** Real links and buttons, a skip link, visible focus, reduced-motion support, and layouts checked from 320 px up.
 
 ## Featured Projects
 
-| Project | Description | Links |
-|---------|-------------|-------|
-| **Chatify** | Real-time chat app with Socket.io & cursor-based pagination | [Code](https://github.com/Ra-jj/chatify) · [Live](https://rajcodes-chatify.onrender.com) |
-| **AI Resume Analyzer** | AI-powered resume analysis with ATS scoring | [Code](https://github.com/Ra-jj/AI-Resume-Analyzer) · [Live](https://ai-resume-analyzer-rajcodes.vercel.app) |
-| **Donor** | Blood donation coordination with geospatial donor matching | [Code](https://github.com/Ra-jj/Donor) · [Live](https://rajcodes-donor.onrender.com) |
+| Project | Description | Stack | Links |
+|---------|-------------|-------|-------|
+| **AI Resume Analyzer** | AI-powered resume analysis with ATS scoring | React, Vite, PDF.js, Puter.js AI, REST APIs | [Source code](https://github.com/Ra-jj/AI-Resume-Analyzer) · [Live demo](https://ai-resume-analyzer-rajcodes.vercel.app) |
+| **Donor** | Blood donation platform with geospatial donor matching | React.js, Node.js, Express, MongoDB, Socket.io, TailwindCSS, Zustand, Jest, GitHub Actions | [Source code](https://github.com/Ra-jj/Donor) · [Live demo](https://rajcodes-donor.onrender.com) |
+| **Chatify** | Real-time chat app with Socket.io and cursor-based pagination | React.js, Node.js, Express, MongoDB, Socket.io, TailwindCSS, Zustand | [Source code](https://github.com/Ra-jj/chatify) · [Live demo](https://rajcodes-chatify.onrender.com) |
 
 ## Built With
 
-`React 19` · `Vite` · `Tailwind CSS` · `Framer Motion` · `GSAP` · `React Three Fiber` · `Zustand` · `Socket.io` · `border-beam`
+- **React 19** and **Vite**
+- **Tailwind CSS**
+- **Fontsource**, self-hosted: Archivo (silkscreen and text), Martian Mono (the receipt), Doto (the dot-matrix LCDs)
+- **react-icons**, Phosphor Bold
+- **Formspree** for the contact form
+
+The calculator, LCDs, receipt and keycaps are HTML and CSS. There is no three.js, GSAP, Framer Motion or border-beam: motion is CSS transitions, native scrolling and IntersectionObserver.
 
 ## Architecture
 
 ```
 src/
-├── components/       # UI sections (Hero, Timeline, Skills, Projects, Contact)
-│   └── ui/           # Reusable primitives (AnimatedNav, Cursor, FlowButton, WebStrings)
-├── constants/        # All portfolio content as data files
-│   ├── journey.js    # Timeline milestones
-│   ├── projects.js   # Featured project cards
-│   └── skills.js     # Skills gained section
-└── lib/              # Shared utilities
+├── App.jsx               # Page order, skip link, sticky bar, footer
+├── components/
+│   ├── Hero.jsx          # Name, intro and the calculator
+│   ├── StickyBar.jsx     # Key bar after the hero, with a mini LCD
+│   ├── Timeline.jsx      # Journey: the receipt and its printer
+│   ├── Projects.jsx      # Rack modules
+│   ├── Skills.jsx        # Radio band scale
+│   ├── Contact.jsx       # "=" panel: form, status LCD, links
+│   ├── Footer.jsx        # Base strip: links and "Back to calculator"
+│   ├── calculator/       # Calculator, LCD and its script, keycaps, LEDs, switches
+│   ├── receipt/          # Printer and receipt entries
+│   └── contact/          # Contact LCD
+├── constants/
+│   ├── navigation.js     # Key map: every label, URL, section id, shortcut and key LCD message
+│   ├── journey.js        # Journey milestones
+│   ├── projects.js       # Featured projects
+│   └── skills.js         # Skill bands
+├── context/              # Shared navigation, LCD messages and the shortcuts switch
+├── hooks/                # Section navigation, shortcuts, active section, in-view, reduced motion
+└── lib/                  # Shared utilities
 ```
 
-> All content is data-driven. Update `src/constants/` to personalize — no component code changes needed.
+> Projects, journey, skills and every navigation label, URL and key message on the LCDs live in `src/constants/`; headings and section copy are in the components.
+
+## Run it locally
+
+```bash
+npm install
+npm run dev
+```
+
+The contact form sends through Formspree. Set `VITE_FORMSPREE_ENDPOINT` to your form's endpoint (for example in `.env.local`) before building; without it, the form tells visitors to message on LinkedIn instead.
 
 ## Connect
 
